@@ -1,0 +1,6 @@
+name=Playmon
+author=Alan
+description=Find and capture monsters, and battle with them!
+bundleID=com.phpizza.playmon
+version=0.1
+imagePath=SystemAssets/
