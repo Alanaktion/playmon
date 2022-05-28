@@ -39,7 +39,7 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 258, 258, 258, 258, 258, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 302, 302, 302, 302, 302, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 302, 302, 302, 302, 302, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 302, 8, 302, 302, 302, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -84,41 +84,40 @@
                  "y":126.296
                 }, 
                 {
-                 "gid":417,
-                 "height":16,
-                 "id":5,
+                 "height":28.7687870047062,
+                 "id":7,
                  "name":"",
                  "properties":[
                         {
-                         "name":"destinationMap",
+                         "name":"teleport",
                          "type":"string",
                          "value":"big-world"
                         }, 
                         {
-                         "name":"destinationX",
+                         "name":"teleportX",
                          "type":"int",
-                         "value":0
+                         "value":370
                         }, 
                         {
-                         "name":"destinationY",
+                         "name":"teleportY",
                          "type":"int",
-                         "value":0
+                         "value":460
                         }],
                  "rotation":0,
-                 "type":"door",
+                 "type":"teleport",
                  "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":80
+                 "width":42.7356915135874,
+                 "x":18.6902182090107,
+                 "y":65.7768144593221
                 }],
-         "opacity":1,
+         "opacity":0.66,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":7,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.5",

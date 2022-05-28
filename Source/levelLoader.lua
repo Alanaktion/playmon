@@ -105,14 +105,16 @@ function getObjectsFromJSON(jsonTable)
 		if layer.type == 'objectgroup' then
 			for j=1, #layer.objects do
 				local object = layer.objects[j]
-				-- Tiled uses bottom-left corner as origin of objects
-				if object.height > 0 then
+				-- Tiled uses bottom-left corner as origin of tile objects
+				if object.gid and object.height > 0 then
 					object.y -= object.height
 				end
 				if object.properties ~= nil then
-					for k=1, #object.properties do
-						local property = object.properties[k]
-						object[property.name] = property.value
+					local properties = object.properties
+					object.properties = {}
+					for k=1, #properties do
+						local property = properties[k]
+						object.properties[property.name] = property.value
 					end
 				end
 				table.insert(objects, object)

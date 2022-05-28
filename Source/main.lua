@@ -5,15 +5,15 @@ import 'CoreLibs/sprites'
 import 'level'
 -- import 'soundManager'
 
-playdate.display.setRefreshRate(30)
+playdate.display.setRefreshRate(40)
 
 local FrameTimer_update = playdate.frameTimer.updateTimers
 local gfx = playdate.graphics
 
--- local level = Level('big-world.json')
-local level = Level('overworld.json')
+Level.change('big-world')
 
 function playdate.update()
 	gfx.sprite.update()
 	FrameTimer_update()
+	playdate.drawFPS(0, 0)
 end

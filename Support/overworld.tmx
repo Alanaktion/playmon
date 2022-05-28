@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="7">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="8">
  <editorsettings>
-  <export target="../Source/overworld.json" format="json"/>
+  <export target="../Source/maps/overworld.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="420" columns="21">
   <image source="../Source/img/tileset-table-16-16.png" width="336" height="320"/>
@@ -37,7 +37,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,258,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,302,302,302,302,302,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,302,302,302,302,302,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,302,8,302,302,302,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -50,15 +50,15 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Objects">
+ <objectgroup id="4" name="Objects" opacity="0.66">
   <object id="1" name="Spawn" type="spawn" x="112.148" y="126.296">
    <point/>
   </object>
-  <object id="5" type="door" gid="417" x="32" y="80" width="16" height="16">
+  <object id="7" type="teleport" x="18.6902" y="65.7768" width="42.7357" height="28.7688">
    <properties>
-    <property name="destinationMap" value="big-world"/>
-    <property name="destinationX" type="int" value="0"/>
-    <property name="destinationY" type="int" value="0"/>
+    <property name="teleport" value="big-world"/>
+    <property name="teleportX" type="int" value="370"/>
+    <property name="teleportY" type="int" value="460"/>
    </properties>
   </object>
  </objectgroup>
