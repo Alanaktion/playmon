@@ -1,14 +1,6 @@
 import 'levelLoader'
-import 'levelObject'
-import 'player'
-
--- local references
-local gfx = playdate.graphics
-local Point = playdate.geometry.point
-local Rect = playdate.geometry.rect
-local abs, floor, ceil, min, max = math.abs, math.floor, math.ceil, math.min, math.max
-
-local displayWidth, displayHeight = playdate.display.getSize()
+import 'sprites/levelObject'
+import 'sprites/player'
 
 -- tilemaps
 local walls
@@ -34,8 +26,11 @@ function Level:init(pathToLevelJSON, position)
 	self:setZIndex(0)
 	self:setCenter(0, 0) -- set center point to top left
 
+	self.fade = 0
+	self.fadeTarget = 0
 	self.objInstances = {}
 	self.tileset, self.layers, self.objects = importDataFromTiledJSON(pathToLevelJSON)
+	self:setAlwaysRedraw(false)
 
 	-- set up local references for the layers we read
 	walls = self.layers["Walls"]
@@ -63,8 +58,34 @@ end
 -- Unload the current level, and init the new specified level
 -- Optionally place the player at the specified position
 function Level.change(newLevel, position)
+	-- TODO: fade out current level before fading in
 	gfx.sprite.removeAll()
 	level = Level('maps/' .. newLevel .. '.json', position)
+	level:fadeIn()
+end
+
+function Level:fadeIn()
+	self.fade = 100
+	self.fadeTarget = 0
+end
+
+function Level:fadeOut()
+	self.fade = 0
+	self.fadeTarget = 100
+end
+
+function Level.hide()
+	gfx.setDrawOffset(0, 0)
+	level:setVisible(false)
+	level:remove()
+	player:remove()
+end
+
+function Level.show()
+	gfx.setDrawOffset(-cameraX, -cameraY)
+	level:setVisible(true)
+	level:add()
+	player:add()
 end
 
 
@@ -132,18 +153,18 @@ function Level:moveEnemies()
 end
 
 function Level:updateCameraPosition()
-	local newX = min(cameraX, cameraMax.x)
-	local newY = min(cameraY, cameraMax.y)
+	local newX = math.min(cameraX, cameraMax.x)
+	local newY = math.min(cameraY, cameraMax.y)
 
 	if player.position.y - newY < CAMERA_PAN_MIN then
-		newY = max(cameraMin.y, player.position.y - CAMERA_PAN_MIN)
+		newY = math.max(cameraMin.y, player.position.y - CAMERA_PAN_MIN)
 	elseif player.position.y - newY > displayHeight - CAMERA_PAN_MIN then
-		newY = min(cameraMax.y, player.position.y - displayHeight + CAMERA_PAN_MIN)
+		newY = math.min(cameraMax.y, player.position.y - displayHeight + CAMERA_PAN_MIN)
 	end
 	if player.position.x - newX < CAMERA_PAN_MIN then
-		newX = max(cameraMin.x, player.position.x - CAMERA_PAN_MIN)
+		newX = math.max(cameraMin.x, player.position.x - CAMERA_PAN_MIN)
 	elseif player.position.x - newX > displayWidth - CAMERA_PAN_MIN then
-		newX = min(cameraMax.x, player.position.x - displayWidth + CAMERA_PAN_MIN)
+		newX = math.min(cameraMax.x, player.position.x - displayWidth + CAMERA_PAN_MIN)
 	end
 
 	if newX ~= cameraX or newY ~= cameraY then
@@ -159,11 +180,24 @@ end
 function Level:update()
 	self:movePlayer()
 	self:updateCameraPosition()
+	if self.fade ~= self.fadeTarget then
+		if self.fade > self.fadeTarget then
+			self.fade -= 10
+		else
+			self.fade += 10
+		end
+		self:markDirty()
+	end
 end
 
 function Level:draw(x, y, width, height)
-	background.tilemap:draw(0, 0)
-	walls.tilemap:draw(0, 0)
+	background.tilemap:draw(0, 0, Rect.new(x, y, width, height))
+	walls.tilemap:draw(0, 0, Rect.new(x, y, width, height))
+	if self.fade then
+		local black = gfx.image.new(displayWidth, displayHeight, gfx.kColorBlack)
+		black:drawFaded(cameraX, cameraY, self.fade / 100, gfx.image.kDitherTypeDiagonalLine)
+		-- gfx.image.kDitherTypeScreen
+	end
 end
 
 
@@ -192,8 +226,10 @@ function Level:setupObjects()
 end
 
 function Level:setupWallSprites()
-	-- group the wall areas into larger areas and add collision sprites for them
-	local walls = gfx.sprite.addWallSprites(walls.tilemap, {1})
+	-- group wall tiles into larger rects and add collision sprites for them
+	-- TODO: Change empty IDs to just {0} once empty tiles are supported
+	-- https://devforum.play.date/t/allowing-getcollisionrects-to-use-invalid-tileid/5465
+	local walls = gfx.sprite.addWallSprites(walls.tilemap, {0,1,2})
 	for i = 1, #walls do
 		local w = walls[i]
 		w.isWall = true

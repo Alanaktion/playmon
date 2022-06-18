@@ -36,7 +36,7 @@ local function getTilesetFromJSON(jsonTable)
 	newTileset.name = tileset.name
 	newTileset.tileHeight = tileset.tileheight
 	newTileset.tileWidth = tileset.tilewidth
-	local tilesetImageName = string.sub(tileset.image, 1, string.find(tileset.image, '-table-') - 1)
+	local tilesetImageName = string.sub(tileset.image, 4, string.find(tileset.image, '-table-') - 1)
 	newTileset.imageTable = playdate.graphics.imagetable.new(tilesetImageName)
 
 	return newTileset

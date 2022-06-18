@@ -1,4 +1,4 @@
-local gfx = playdate.graphics
+LevelObject = {}
 class('LevelObject').extends(gfx.sprite)
 
 local Point = playdate.geometry.point

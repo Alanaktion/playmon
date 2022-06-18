@@ -1,11 +1,7 @@
-local gfx = playdate.graphics
+Player = {}
 class('Player').extends(gfx.sprite)
 
--- Local references
-local Point = playdate.geometry.point
-local Rect = playdate.geometry.rect
 local vector2D = playdate.geometry.vector2D
-local min, max, abs, floor = math.min, math.max, math.abs, math.floor
 
 -- Constants
 local DT = 3
@@ -27,6 +23,7 @@ function Player:init()
 	self:setZIndex(1000)
 	self:setCenter(0.5, 1)	-- set center point to center bottom middle
 	self:setCollideRect(2, 12, spriteWidth-4, spriteHeight-12)
+	self:setAlwaysRedraw(false)
 
 	self.position = Point.new(0, 0)
 	self.velocity = vector2D.new(0,0)
@@ -83,6 +80,12 @@ function Player:update()
 		runImageIndex += 0.2
 	end
 
+	-- TODO: TEMPORARY -- allow jumping into battle screen
+	if playdate.buttonJustPressed("B") then
+		Level.hide()
+		battle = new Battle()
+	end
+
 	if runImageIndex > 3.5 then runImageIndex = 1 end
 
 	-- Update Player position based on current velocity
@@ -117,7 +120,7 @@ function Player:updateImage()
 	if self.velocity.x == 0 and self.velocity.y == 0 then
 		self:setImage(self.playerImages:getImage(STAND), flip)
 	else
-		self:setImage(self.playerImages:getImage(floor(runImageIndex+1)), flip)
+		self:setImage(self.playerImages:getImage(math.floor(runImageIndex+1)), flip)
 	end
 end
 

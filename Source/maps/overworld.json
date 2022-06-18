@@ -84,7 +84,7 @@
                  "y":126.296
                 }, 
                 {
-                 "height":28.7687870047062,
+                 "height":28.7688,
                  "id":7,
                  "name":"",
                  "properties":[
@@ -106,9 +106,9 @@
                  "rotation":0,
                  "type":"teleport",
                  "visible":true,
-                 "width":42.7356915135874,
-                 "x":18.6902182090107,
-                 "y":65.7768144593221
+                 "width":42.7357,
+                 "x":18.6902,
+                 "y":65.7768
                 }],
          "opacity":0.66,
          "type":"objectgroup",
@@ -120,13 +120,13 @@
  "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.5",
+ "tiledversion":"1.8.6",
  "tileheight":16,
  "tilesets":[
         {
          "columns":21,
          "firstgid":1,
-         "image":"img\/tileset-table-16-16.png",
+         "image":"..\/img\/tileset-table-16-16.png",
          "imageheight":320,
          "imagewidth":336,
          "margin":0,
