@@ -21,17 +21,24 @@ fontFamily14 = {
 
 font15 = gfx.font.new('fonts/Oklahoma-Bold')
 font15:setTracking(1)
--- font15italic = gfx.font.new('fonts/Oklahoma-Bold-Italic')
--- font15italic:setTracking(1)
+font15italic = gfx.font.new('fonts/Oklahoma-Bold-Italic')
+font15italic:setTracking(1)
 fontFamily15 = {
 	[gfx.font.kVariantNormal] = font15,
-	-- [gfx.font.kVariantItalic] = font15italic,
+	[gfx.font.kVariantItalic] = font15italic,
 }
 
 -- font16 = gfx.font.new('fonts/font-pedallica-fun-16')
 -- font16:setTracking(1)
 -- fontFamily16 = {
 -- 	[gfx.font.kVariantNormal] = font16,
+-- }
+
+-- font24 = gfx.font.new('fonts/Roobert-24-Medium')
+font24round = gfx.font.new('fonts/Asheville-Rounded-24-px')
+font24round:setTracking(1)
+-- fontFamily24 = {
+-- 	[gfx.font.kVariantNormal] = font24,
 -- }
 
 gfx.setFontFamily(fontFamily14)

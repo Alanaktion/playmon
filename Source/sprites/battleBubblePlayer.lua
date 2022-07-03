@@ -1,18 +1,28 @@
+import 'hpGauge'
+
 BattleBubblePlayer = {}
 class('BattleBubblePlayer').extends(gfx.sprite)
 
-function BattleBubblePlayer:init()
+function BattleBubblePlayer:init(x, y)
 	BattleBubblePlayer.super.init(self)
+
 	self:setCenter(0, 0)
+	self:setZIndex(20)
+	self:moveTo(x, y)
 	self.image = gfx.image.new("img/msg-player")
 	self:setSize(self.image:getSize())
+
 	self.name = ''
-	self.curHP = 1
-	self.maxHP = 1
 	self.curAP = 0
 	self.maxAP = 0
 	self.curEXP = 0
 	self.maxEXP = 0
+
+	self.hpGauge = HpGauge()
+	self.hpGauge:moveTo(x + 52, y + 18)
+	self.hpGauge:setZIndex(21)
+	self.hpGauge:add()
+
 	self:setAlwaysRedraw(false)
 end
 
@@ -23,9 +33,7 @@ function BattleBubblePlayer:setName(name, lv)
 end
 
 function BattleBubblePlayer:setHP(val, max)
-	self.curHP = val
-	self.maxHP = max
-	self:markDirty()
+	self.hpGauge:setHP(val, max)
 end
 
 function BattleBubblePlayer:setAP(val, max)
@@ -40,25 +48,17 @@ function BattleBubblePlayer:setEXP(val, max)
 	self:markDirty()
 end
 
+function BattleBubblePlayer:remove()
+	self.hpGauge:remove()
+	gfx.sprite.removeSprite(self)
+end
+
 function BattleBubblePlayer:draw(x, y, width, height)
 	self.image:draw(0, 0)
 
 	-- Name/Level top text
 	font15:drawText(self.name, 10, 2)
 	font15:drawTextAligned('Lv ' .. self.lv, self.width - 5, 2, kTextAlignment.right)
-
-	-- HP container + label
-	gfx.fillRoundRect(52, 18, 130, 10, 5)
-	gfx.setColor(gfx.kColorWhite)
-	gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-	font11bold:drawText('HP', 59, 19)
-	gfx.setImageDrawMode(gfx.kDrawModeCopy)
-
-	-- HP track + fill
-	gfx.fillRoundRect(79, 19, 102, 8, 4)
-	gfx.setColor(gfx.kColorBlack)
-	local hpWidth = math.floor(self.curHP / self.maxHP * 100)
-	gfx.fillRoundRect(80, 20, hpWidth, 6, 3)
 
 	-- EXP gauge
 	font11bold:drawText('EXP', 10, 34)

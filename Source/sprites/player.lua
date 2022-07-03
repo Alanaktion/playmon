@@ -80,12 +80,6 @@ function Player:update()
 		runImageIndex += 0.2
 	end
 
-	-- TODO: TEMPORARY -- allow jumping into battle screen
-	if playdate.buttonJustPressed("B") then
-		Level.hide()
-		battle = new Battle()
-	end
-
 	if runImageIndex > 3.5 then runImageIndex = 1 end
 
 	-- Update Player position based on current velocity

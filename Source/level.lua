@@ -18,6 +18,7 @@ local cameraMax
 cameraX = 0
 cameraY = 0
 
+Level = {}
 class('Level').extends(gfx.sprite)
 
 function Level:init(pathToLevelJSON, position)
@@ -26,8 +27,6 @@ function Level:init(pathToLevelJSON, position)
 	self:setZIndex(0)
 	self:setCenter(0, 0) -- set center point to top left
 
-	self.fade = 0
-	self.fadeTarget = 0
 	self.objInstances = {}
 	self.tileset, self.layers, self.objects = importDataFromTiledJSON(pathToLevelJSON)
 	self:setAlwaysRedraw(false)
@@ -58,20 +57,18 @@ end
 -- Unload the current level, and init the new specified level
 -- Optionally place the player at the specified position
 function Level.change(newLevel, position)
-	-- TODO: fade out current level before fading in
-	gfx.sprite.removeAll()
-	level = Level('maps/' .. newLevel .. '.json', position)
-	level:fadeIn()
-end
-
-function Level:fadeIn()
-	self.fade = 100
-	self.fadeTarget = 0
-end
-
-function Level:fadeOut()
-	self.fade = 0
-	self.fadeTarget = 100
+	local callback = function()
+		gfx.sprite.removeAll()
+		overlay:add()
+		level = Level('maps/' .. newLevel .. '.json', position)
+		overlay:fadeIn()
+	end
+	if level ~= nil then
+		overlay:fadeOut(callback)
+	else
+		callback()
+		callback = nil
+	end
 end
 
 function Level.hide()
@@ -81,11 +78,25 @@ function Level.hide()
 	player:remove()
 end
 
+function Level.hideWithFade(callback)
+	overlay:fadeOut(function()
+		Level.hide()
+		if callback ~= nil then
+			callback()
+		end
+	end)
+end
+
 function Level.show()
 	gfx.setDrawOffset(-cameraX, -cameraY)
 	level:setVisible(true)
 	level:add()
 	player:add()
+end
+
+function Level.showWithFade(callback)
+	Level.show()
+	overlay:fadeIn(callback)
 end
 
 
@@ -180,24 +191,11 @@ end
 function Level:update()
 	self:movePlayer()
 	self:updateCameraPosition()
-	if self.fade ~= self.fadeTarget then
-		if self.fade > self.fadeTarget then
-			self.fade -= 10
-		else
-			self.fade += 10
-		end
-		self:markDirty()
-	end
 end
 
 function Level:draw(x, y, width, height)
 	background.tilemap:draw(0, 0, Rect.new(x, y, width, height))
 	walls.tilemap:draw(0, 0, Rect.new(x, y, width, height))
-	if self.fade then
-		local black = gfx.image.new(displayWidth, displayHeight, gfx.kColorBlack)
-		black:drawFaded(cameraX, cameraY, self.fade / 100, gfx.image.kDitherTypeDiagonalLine)
-		-- gfx.image.kDitherTypeScreen
-	end
 end
 
 

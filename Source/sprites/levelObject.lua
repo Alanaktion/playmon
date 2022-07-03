@@ -7,6 +7,7 @@ local Rect = playdate.geometry.rect
 function LevelObject:init(initialPosition, type)
 	LevelObject.super.init(self)
 
+	self.type = type
 	self:setZIndex(800)
 	self:setCenter(0, 0)
 	if initialPosition ~= nil then
@@ -24,6 +25,14 @@ end
 
 -- Called when the player presses A while intersecting the object
 function LevelObject:activate()
+	if self.type == "grass" then
+		-- TODO: do accumulated chance of encounter while colliding with grass and moving, rather than entering a battle manually with A
+		Level.hideWithFade(function()
+			battle = new Battle()
+			overlay:fadeIn()
+		end)
+		return
+	end
 	local props = self.properties
 	if props == nil then
 		return

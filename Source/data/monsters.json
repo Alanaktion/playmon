@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Leozar",
+		"type": "fire",
+		"image": "fire2_dither"
+	},
+	{
+		"name": "Ashatee",
+		"type": "fire",
+		"image": "fire5_dither"
+	},
+	{
+		"name": "Flamedine",
+		"type": "fire",
+		"image": "fire6_dither"
+	},
+	{
+		"name": "Dropophin",
+		"type": "water",
+		"image": "water2a_dither"
+	},
+	{
+		"name": "Whirlark",
+		"type": "water",
+		"image": "water2b_dither"
+	},
+	{
+		"name": "Pengoom",
+		"type": "water",
+		"image": "water3a_dither"
+	},
+	{
+		"name": "Quiphin",
+		"type": "water",
+		"image": "water6_dither"
+	},
+	{
+		"name": "Lunaraus",
+		"type": "water",
+		"image": "water9_dither"
+	}
+]
